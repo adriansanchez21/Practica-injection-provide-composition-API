@@ -11,42 +11,58 @@ const menjars = reactive([
   { name: "Fries 🍟", price: 2 },
 ]);
 
-const cart: Ref<Product[]> = ref([]);
-
-// const afegirMenjar = (product: Product): void => {
-//   cart.value.push(product);
-//   alert(cart.value.map((product) => product.name));
-// };
+const menjarsComanda: Ref<Product[]> = ref([]);
 
 function afegirMenjar(product: Product) {
-  cart.value.push(product);
-  alert(cart.value.map((product) => product.name));
+  menjarsComanda.value.push(product);
+  alert(menjarsComanda.value.map((product) => product.name));
 }
 
-
-const placeOrder = (): void => {
-  alert(`Your order has been placed.`);
-};
-
+function placeOrder() {
+  alert('Your order has been placed!');
+  menjarsComanda.value = [];
+}
 </script>
 
 <template>
-  <header>
+  <div class="principal">
+
     <h1>{{ nomComanda }}</h1>
-    <section>
-      <input v-model="nomComanda" type="text" />
-      <button @click="placeOrder" type="button">Place Order</button>
-    </section>
-  </header>
+    <input v-model="nomComanda" type="text" /><br>
+    <button @click="placeOrder" type="button" class="separar">Place Order</button>
+    <br>
 
-  <Currency></Currency>
+    <Currency class="currency"></Currency>
 
-    <section class="productes">
-      <Comanda
-        @@add-to-cart="(product:Product) => afegirMenjar(product)"
-        v-for="(product, index) in menjars"
-        :info="product"
-        :key="index"
-      />
-    </section>
+    <ul>
+    <li v-for="(product, index) in menjars" :key="index">
+      <div class="centrar">
+        <Comanda @@afegirProducteComanda="(product: Product) => afegirMenjar(product)" :info="product" />
+      </div>
+    </li>
+  </ul>
+  </div>
 </template>
+
+<style scoped>
+.principal {
+  text-align: center;
+}
+
+ul, li {
+  list-style-type: none;
+  text-align: center;
+}
+
+.separar {
+  margin: 20px;
+}
+
+.centrar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+</style>

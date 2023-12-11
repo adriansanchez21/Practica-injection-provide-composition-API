@@ -5,17 +5,30 @@ defineProps<{
 }>();
 
 defineEmits<{
-  "@addToCart": [info: Product];
+  "@afegirProducteComanda": [info: Product];
 }>();
 </script>
 
 <template>
-  <article>
-    <p>{{ info.name }}</p>
-    <p>{{ info.price }}</p>
-    <CurrencyPrice :price="info.price" />
-    <button @click="$emit('@addToCart', info)" type="button">
-      Add to Cart
-    </button>
-  </article>
+  <div class="producte">
+    <span class="name">{{ info.name }}</span>
+    <span class="price">{{ info.price }}</span>
+    <button @click="$emit('@afegirProducteComanda', info)" type="button">Add to Cart</button>
+  </div>
 </template>
+
+<style scoped>
+.producte {
+  display: flex;
+  text-align: center;
+  margin: 10px;
+}
+
+.name {
+  margin-right: 10px;
+}
+
+.price {
+  margin-right: 10px;
+}
+</style>
